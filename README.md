@@ -6,24 +6,56 @@ Zhijie (Jay) Xu — book in preparation (draft, November 2026)
 
 <p align="center"><img src="cover.jpg" alt="Cover of The Cosmic Cascade and the Nonequilibrium Universe" width="360"></p>
 
+A stirred fluid, a universe of dark matter and a neural network in training never settle. Each is driven, couples its scales, fluctuates and keeps what it has built, and each shows power laws that end at a scale which moves with time. This book studies the second of these systems with the questions of the first, and ends by setting the third beside them.
+
 This repository gives an overview of the book: its cover, table of contents and preface, the plan of the whole book, and the research papers, data and code it is built on. The full text is under review by the author and is not yet released.
 
 ## About the book
 
-On the scales of galaxies and of the cosmic web, dark matter is known only through its gravity. It behaves as a cold, collisionless, self-gravitating medium in an expanding background: a flow with many scales, no small parameter and a transfer of mass and energy between scales, held away from equilibrium by gravity, by the expansion and by the steady supply of matter into haloes. Fluid dynamics has a mature language for such flows, the language of turbulence. This book asks the questions of turbulence of the dark-matter flow, and answers them with measurements in cosmological simulations, exact relations and models stated as such.
+The title names two things. **The cascade is the subject:** the transfer of mass from small haloes of dark matter to large ones, and of total energy the other way. **Nonequilibrium is the frame.**
 
-The book is a research monograph written from the side of fluid dynamics. It brings together, rewrites and recomputes the results of 24 papers published or posted by the author between 2020 and 2026, in one logical order with one notation, one set of conventions and one registry of numbers. It is not a collection of the papers. Two primer chapters, one on structure formation for readers from fluid dynamics and one on turbulence for readers from cosmology, make it readable from either side.
+Leave a gas in a closed box and it comes to equilibrium: collisions share out the energy, the velocities settle into Maxwell's distribution, and nothing flows any more. Dark matter never gets there, for three reasons. Its force, gravity, is long-range and cannot be screened, so the whole cannot be built from local equilibria. Its background expands, so the laws that move the particles change with time and the energy of the particles is not conserved. And matter keeps arriving: haloes keep accreting and merging. The result is a flow with many scales and no small parameter, held away from equilibrium by a steady transfer across scales — the kind of system that the theory of turbulence is about.
+
+The book is a research monograph written from the side of fluid dynamics. It asks the questions of turbulence of the dark-matter flow and answers them with measurements in cosmological simulations, exact relations and models stated as such. It brings together, rewrites and recomputes the results of 24 papers published or posted by the author between 2020 and 2026, in one logical order with one notation, one set of conventions and one registry of numbers. It is not a collection of the papers. Two primer chapters, one on structure formation for readers from fluid dynamics and one on turbulence for readers from cosmology, make it readable from either side.
+
+## Three systems out of equilibrium
+
+The book reads each system with the same four ingredients of a driven system with many scales.
+
+| | Turbulence | Dark matter | Training a language model |
+|---|---|---|---|
+| **Drive** | stirring puts energy in at the largest scale | matter keeps entering haloes; the binding of the largest haloes deepens as they grow | the stream of training data |
+| **Coupling across scales** | advection hands energy from an eddy to smaller eddies | accretion and mergers pass mass to larger haloes and total energy to smaller ones | the nonlinear layers couple what is learned at one length of context to what is learned at another |
+| **Fluctuations** | the instability of each eddy | the primordial density field, then the random sequence of accretions and mergers | sampling of the data in small batches |
+| **End of the chain** | viscosity turns the motion of the smallest eddies into heat | the expansion removes total energy, and no heat is made; the binding of matter into haloes makes structure permanent | what has been learned is consolidated and stays |
+| **Variable of scale** | wavenumber | halo mass; radius inside a halo | length of context |
+| **Law with a moving cut-off** | Kolmogorov spectrum with its dissipation range | halo mass function, cut off at a mass that grows with time; density inside haloes | loss spectrum, whose scales move with training |
+
+In each system the law is the solution of one random walk in a variable of scale, with a waiting time that is a power of the scale. For turbulence and dark matter the four ingredients are shown in the chapters; for language models they are a reading of training, not a measurement.
+
+### The dark-matter cascade
+
+Turbulence in three dimensions carries one quantity, kinetic energy, from large eddies to small ones, where viscosity turns it into heat. Dark matter carries two quantities in opposite directions. **Mass** enters at the small end, where free particles join haloes, is passed up by accretion and mergers, and piles up near a cut-off mass that grows with time, as energy does in two-dimensional turbulence. **Total energy**, kinetic plus potential, flows down from the binding of the largest haloes to the smallest scale, as energy does in three-dimensional turbulence. The sink is not viscosity but the expansion of the universe, which makes no heat, and the reservoir is a gravitational well without a floor.
+
+### The language-model part
+
+The last part of the book applies the same frame to a system with no physics in it. A language model is allowed to see only the last *r* tokens of a text, and its loss is measured as a function of *r* and of the training step. The gain in loss per added token of context, the *loss spectrum*, plays the part of the energy spectrum of turbulence.
+
+- **Measured.** For four public models (Pythia with 70, 160 and 410 million parameters, and GPT-2), on WikiText-103, the loss spectrum falls as a power of the length of context, with slopes between −1.05 and −1.21 for *r* = 2 to 32. Training has two phases: for Pythia-160M, the part of the loss that context removes grows quickly until about step 1.9 × 10³, where it equals the loss with full context; after that both change slowly.
+- **Modelled.** Learning to use context is taken to be a random walk in the length of context. A closure from Heaps' law for the number of distinct words gives a waiting-time exponent of 1/6. The walk then gives a loss spectrum of *r*^−7/6, inside the measured range, and a loss with full context that falls as the tenth root of the number of training steps. Pythia-160M shows an exponent of −0.101 between steps 2000 and 10⁴, flatter later; across model sizes the exponent ranges from −0.07 to −0.16.
+- **What the analogy carries, and what it does not.** The three systems share scale-free random transport with a moving cut-off. The exponent, the direction and the drift come from each system's own closure, source and noise. The loss is not a conserved quantity, and language models have no equation of motion of the kind that turbulence and dark matter have. The evidence spans one decade of context, one corpus, one family of models and GPT-2. The book labels this part as frontier, an analogy, not a result of the core.
 
 ## Major findings
 
-- Dark matter is treated as a flow out of equilibrium whose cascade runs the other way from three-dimensional turbulence: mass and energy pass from small haloes to large ones, and nothing is dissipated; the expansion closes the energy budget.
-- One measured rate is the thread of the book. The kinetic energy of the motion of particles inside their haloes grows nearly in proportion to cosmic time (as t^0.92 in the Virgo run, with exponents 0.99 to 1.07 in Illustris-1-Dark); the constant of proportionality, the cascade rate, is about 3 × 10⁻⁷ m² s⁻³ (3.0 × 10⁻⁷ and 2.6 × 10⁻⁷ in the two runs).
-- The statistics of the flow obey exact kinematic relations: the flow is of constant divergence inside haloes and irrotational on large scales; its velocity distributions are non-Gaussian for an identifiable reason, and a maximum-entropy argument gives their form.
-- Over a range of halo masses the flux of mass from smaller to larger haloes does not depend on the mass at which it is counted, and the kinetic energy inside haloes is carried along with it to larger masses.
-- A random walk of halo mass gives the shape of the halo mass function, with the Press–Schechter form as a special case; a rate of energy transfer that is the same at every radius gives the four-thirds law of the density over part of halo interiors and the two-thirds law of the velocity dispersion with halo mass.
-- The same rate is carried to observations — rotation curves and an acceleration scale, the baryon content of haloes, supermassive black holes and cosmic quenching, the decline of cosmic star formation, and a dark-energy model fitted to DESI DR2 — each application with hypotheses of its own.
-- At the frontier, and labelled as an extrapolation over some thirty decades in length, the cascade fixes a dark-matter particle mass near 10¹² GeV to within a factor of two; one random walk describes the spectrum of turbulence, the haloes of dark matter and the loss of language models.
-- Every key result is labelled *measured*, *derived* or *assumed*, and the last chapter sorts all the claims of the book under these labels.
+- **Dark matter is a flow out of equilibrium with two cascades.** Mass passes from small haloes to large ones, and total energy from large scales to small; the expansion is the sink and makes no heat. In the Virgo run both flows keep their direction at every output since redshift 3.
+- **One measured rate is the thread of the book.** The kinetic energy of the motion of particles inside their haloes grows nearly in proportion to cosmic time (as t^0.92 in the Virgo run, with exponents 0.99 to 1.07 in Illustris-1-Dark). The constant of proportionality, the cascade rate, is about 3 × 10⁻⁷ m² s⁻³ (3.0 × 10⁻⁷ and 2.6 × 10⁻⁷ in the two runs).
+- **The flow keeps a memory at both ends and forgets in between.** Its laws hold only in a range where gravity has erased the initial conditions; quantities inside haloes agree between two simulations with different initial spectra and expansion histories, while those set by the initial spectrum do not.
+- **The statistics of the flow obey exact kinematic relations.** The flow is of constant divergence inside haloes and irrotational on large scales. Its velocity distributions are non-Gaussian for an identifiable reason, and a maximum-entropy argument gives their form.
+- **Haloes are built by random walks.** A random walk of halo mass gives the shape of the halo mass function, with the Press–Schechter form as a special case. A rate of energy transfer that is the same at every radius gives the four-thirds law of the density over part of halo interiors and the two-thirds law of the velocity dispersion with halo mass.
+- **The cascade reaches observations.** The same rate is carried to rotation curves and an acceleration scale, the baryon content of haloes, supermassive black holes and cosmic quenching, the decline of cosmic star formation, and a dark-energy model fitted to DESI DR2, each application with hypotheses of its own.
+- **At the frontier the rate reaches the particle.** Labelled as an extrapolation over some thirty decades in length, the cascade fixes a dark-matter particle mass near 10¹² GeV to within a factor of two.
+- **One random walk, three systems.** The same random walk in a variable of scale describes the spectrum of turbulence, the haloes of dark matter and the loss spectrum of language models in training. For four public language models the loss spectrum falls as a power of the length of context, with slopes from −1.05 to −1.21; the walk predicts −7/6.
+- **Every claim carries its standing.** Every key result is labelled *measured*, *derived* or *assumed*, and the last chapter sorts all the claims of the book under these labels.
 
 ## Contents
 
@@ -70,7 +102,7 @@ The book is a research monograph written from the side of fluid dynamics. It bri
 
 **Part VII — Beyond the dark universe**
 
-22. One random walk, three systems
+22. One random walk, three systems (turbulence, dark-matter haloes and the training of language models)
 23. Established, assumed, open
 
 **Appendices:** A. Notation, units and constants · B. Mathematical supplement · C. Data, code and reproducibility · D. Relation to the original papers · Glossary · Bibliography · Index
@@ -128,6 +160,8 @@ The simulation data behind the figures are public:
 - Dark matter flow dataset, Part II (correlation-based statistics), [doi:10.5281/zenodo.6757654](https://doi.org/10.5281/zenodo.6757654)
 - Dark matter flow dataset, all files, [doi:10.5281/zenodo.6586213](https://doi.org/10.5281/zenodo.6586213)
 - A comparative study of dark matter flow and hydrodynamic turbulence (slides), [doi:10.5281/zenodo.6643911](https://doi.org/10.5281/zenodo.6643911)
+
+The language-model results use public models (Pythia and GPT-2) and the WikiText-103 corpus; the plotted data are in the repository of the language-model paper listed above.
 
 A companion repository with the plotted data of every figure and the scripts that make them will be released with the book (Appendix C).
 
